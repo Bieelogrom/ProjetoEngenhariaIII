@@ -1,6 +1,7 @@
 package com.fatec.zl.ads.entity.Cliente;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fatec.zl.ads.entity.Carrinho.Carrinho;
 
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +39,8 @@ public class Cliente {
     private String endereco;
     @Column(nullable = false)
     private String statusCadastro;
-    private Carrinho carrinho;
+    @OneToMany(mappedBy = "cliente")
+    private List<Carrinho> carrinhos;
 
     public Cliente (String NomeCliente, String CPF, LocalDate dataNasc, String email, String telefone, String statusCadastro) {
         this.NomeCliente = NomeCliente;
