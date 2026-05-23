@@ -20,7 +20,7 @@ public class ExemploController {
     @GetMapping("/teste")
     public String testarThymeleaf(@RequestParam("valor") String valor, Model model) {
         model.addAttribute("valor", valor);
-        return "teste.html";
+        return "teste";
     }
     
 }
