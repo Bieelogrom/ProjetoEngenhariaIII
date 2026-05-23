@@ -1,6 +1,6 @@
-package com.fatec.zl.ads.entity;
+package com.fatec.zl.ads.entity.Livro;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,9 +28,9 @@ public class Livro {
     @Column(nullable = false)
     private String descricao;
     @Column(nullable = false)
-    private Date dataPublicacao;
+    private LocalDate dataPublicacao;
 
-    public Livro(String nome, int paginas, String descricao, Date dataPublicacao) {
+    public Livro(String nome, int paginas, String descricao, LocalDate dataPublicacao) {
         this.nome = nome;
         this.paginas = paginas;
         this.descricao = descricao;
