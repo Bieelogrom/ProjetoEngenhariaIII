@@ -1,39 +1,51 @@
 package com.fatec.zl.ads.entity.Livro;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "livros")
-@Table(name = "livros")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Livro {
+@MappedSuperclass
+public abstract class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @Column(length = 120)
-    private String nome;
+    private String titulo;
+    @Column(nullable = false)
+    private Float preco;
+    @Column(nullable = false)
+    private String categorias; 
+    @Column(length = 220, nullable = false)
+    private String resumo;
     @Column(nullable = false)
     private int paginas;
     @Column(nullable = false)
-    private String descricao;
-    @Column(nullable = false)
     private LocalDate dataPublicacao;
+    @Column(length = 32, nullable = false)
+    private String isbn;
 
-    public Livro(String nome, int paginas, String descricao, LocalDate dataPublicacao) {
-        this.nome = nome;
+
+    public Livro(String titulo, Float preco, String categorias, String resumo, int paginas, LocalDate dataPublicacao,
+            String isbn) {
+        this.titulo = titulo;
+        this.preco = preco;
+        this.categorias = categorias;
+        this.resumo = resumo;
         this.paginas = paginas;
-        this.descricao = descricao;
         this.dataPublicacao = dataPublicacao;
+        this.isbn = isbn;
     }
 }
