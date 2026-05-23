@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -40,6 +41,7 @@ public class Cliente {
     @Column(nullable = false)
     private String statusCadastro;
     @OneToMany(mappedBy = "cliente")
+    @JoinColumn(name = "id_cliente")
     private List<Carrinho> carrinhos;
 
     public Cliente (String NomeCliente, String CPF, LocalDate dataNasc, String email, String telefone, String statusCadastro) {
