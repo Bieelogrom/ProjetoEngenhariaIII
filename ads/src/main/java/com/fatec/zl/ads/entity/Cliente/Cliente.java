@@ -1,10 +1,11 @@
 package com.fatec.zl.ads.entity.Cliente;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
 import com.fatec.zl.ads.entity.Carrinho.Carrinho;
-
+import com.fatec.zl.ads.entity.Pedido.Pedido;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,16 +41,19 @@ public class Cliente {
     private String endereco;
     @Column(nullable = false)
     private String statusCadastro;
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany
     @JoinColumn(name = "id_cliente")
     private List<Carrinho> carrinhos;
+    @OneToMany(mappedBy = "Cliente", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos = new ArrayList<>();
 
-    public Cliente (String NomeCliente, String CPF, LocalDate dataNasc, String email, String telefone, String statusCadastro) {
+    public Cliente (String NomeCliente, String CPF, LocalDate dataNasc, String email, String telefone, String endereco, String statusCadastro) {
         this.NomeCliente = NomeCliente;
         this.CPF = CPF;
         this.dataNasc = dataNasc;
         this.email = email;
         this.telefone = telefone;
+        this.endereco = endereco;
         this.statusCadastro = statusCadastro;
     }
 

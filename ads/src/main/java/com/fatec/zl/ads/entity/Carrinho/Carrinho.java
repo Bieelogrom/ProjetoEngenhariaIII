@@ -1,10 +1,15 @@
 package com.fatec.zl.ads.entity.Carrinho;
 
-
+import java.util.ArrayList;
+import java.util.List;
+import com.fatec.zl.ads.entity.Cliente.Cliente;
+import com.fatec.zl.ads.entity.ItemCarrinho.ItemCarrinho;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,12 +25,20 @@ public class Carrinho {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @JoinColumn(name = "id_carrinho")
+    private List<ItemCarrinho> itens = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
+
     public void visualizarCarrinho() {}
 
     public void destruirItens() {}
 
+ }
+
     
-}
+
 
 
 

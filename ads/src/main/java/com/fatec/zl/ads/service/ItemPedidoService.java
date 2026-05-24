@@ -5,26 +5,20 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Service;
 import com.fatec.zl.ads.entity.Cliente.Cliente;
 import com.fatec.zl.ads.entity.Cliente.ClienteDTORequest;
-import com.fatec.zl.ads.repository.ClienteRepository;
+import com.fatec.zl.ads.repository.ItemPedidoRepository;
 
 
 @Service
-public class ClienteService {
-    private final ClienteRepository clienteRepository;
+public class ItemPedidoService {
+    private final ItemPedidoRepository itemPedidoRepository;
 
-    public ClienteService (ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
+    public ItemPedidoService (ItemPedidoRepository itemPedidoRepository) {
+        this.itemPedidoRepository = itemPedidoRepository;
     }
 
     public Cliente cadastrarCliente(ClienteDTORequest cliente){
         Cliente novoCliente = new Cliente();
         novoCliente.setNomeCliente(cliente.NomeCliente());
-        novoCliente.setCPF(cliente.CPF());
-        novoCliente.setDataNasc(formatarData(cliente.dataNasc()));
-        novoCliente.setEmail(cliente.email());
-        novoCliente.setTelefone(cliente.telefone());
-        novoCliente.setEndereco(cliente.endereco());
-        novoCliente.setStatusCadastro(cliente.statusCadastro());
         return clienteRepository.save(novoCliente);
     }    
 

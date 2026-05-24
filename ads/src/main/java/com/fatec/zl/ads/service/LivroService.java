@@ -3,9 +3,7 @@ package com.fatec.zl.ads.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.fatec.zl.ads.entity.Livro.Livro;
 import com.fatec.zl.ads.entity.Livro.LivroDTORequest;
 import com.fatec.zl.ads.repository.LivroRepository;
@@ -24,6 +22,7 @@ public class LivroService {
         novoLivro.setDescricao(livro.descricao());
         novoLivro.setPaginas(livro.paginas());
         novoLivro.setDataPublicacao(formatarData(livro.dataPublicacao()));
+        novoLivro.setqteEstoque(livro.qteEstoque());
         return livroRepository.save(novoLivro);
     }
 

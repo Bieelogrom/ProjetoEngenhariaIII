@@ -29,11 +29,14 @@ public class Livro {
     private String descricao;
     @Column(nullable = false)
     private LocalDate dataPublicacao;
+    private int qteEstoque;
 
-    public Livro(String nome, int paginas, String descricao, LocalDate dataPublicacao) {
+
+    public Livro(String nome, int paginas, String descricao, LocalDate dataPublicacao, int qteEstoque) {
         this.nome = nome;
         this.paginas = paginas;
         this.descricao = descricao;
         this.dataPublicacao = dataPublicacao;
+        this.qteEstoque = qteEstoque;
     }
 }
