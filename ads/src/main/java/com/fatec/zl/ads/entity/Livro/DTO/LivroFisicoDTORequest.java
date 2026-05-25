@@ -1,4 +1,4 @@
-package com.fatec.zl.ads.entity.Livro;
+package com.fatec.zl.ads.entity.Livro.DTO;
 
 public record LivroFisicoDTORequest(String titulo, Float preco, String categoria, String resumo, Integer paginas, String dataPublicacao, String isbn, String status, Integer quantidade) {
 

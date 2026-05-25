@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fatec.zl.ads.entity.Livro.Livro;
-import com.fatec.zl.ads.entity.Livro.LivroFisicoDTORequest;
+import com.fatec.zl.ads.entity.Livro.DTO.LivroDTO;
 import com.fatec.zl.ads.service.LivroService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,9 +36,9 @@ public class LivroController {
     }
     
 
-    @PostMapping("/cadastrarCapaDura")
-    public ResponseEntity<String> cadastrarCapaDura(@RequestBody LivroFisicoDTORequest livroDTO) {
-        Livro novoLivro = service.cadastrarCapaDura(livroDTO);
+    @PostMapping("/cadastrar")
+    public ResponseEntity<String> cadastrarCapaDura(@RequestBody LivroDTO livroDTO) {
+        Livro novoLivro = service.cadastrarLivro(livroDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoLivro.getTitulo()+" cadastrado com sucesso!");
     }
     

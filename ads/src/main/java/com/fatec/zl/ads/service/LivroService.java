@@ -1,24 +1,22 @@
 package com.fatec.zl.ads.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.fatec.zl.ads.entity.Livro.Livro;
-import com.fatec.zl.ads.entity.Livro.LivroCapaDura;
-import com.fatec.zl.ads.entity.Livro.LivroFisicoDTORequest;
-import com.fatec.zl.ads.entity.Livro.StatusLivro;
+import com.fatec.zl.ads.entity.Livro.DTO.LivroDTO;
+import com.fatec.zl.ads.entity.Livro.Factory.LivroFactory;
 import com.fatec.zl.ads.repository.LivroRepository;
 
 @Service
 public class LivroService {
     private final LivroRepository repository;
+    private final LivroFactory factory;
 
-    public LivroService(LivroRepository repository) {
+    public LivroService(LivroRepository repository, LivroFactory factory) {
         this.repository = repository;
+        this.factory = factory;
     }
 
     public List<Livro> buscarLivroPorTitulo(String titulo){
@@ -31,22 +29,8 @@ public class LivroService {
         return listaDeLivros;
     }
 
-    public Livro cadastrarCapaDura(LivroFisicoDTORequest livroDTO){
-        LivroCapaDura novoLivroFisico = new LivroCapaDura();
-        novoLivroFisico.setTitulo(livroDTO.titulo());
-        novoLivroFisico.setPreco(BigDecimal.valueOf(livroDTO.preco()));
-        novoLivroFisico.setCategorias(livroDTO.categoria());
-        novoLivroFisico.setResumo(livroDTO.resumo());
-        novoLivroFisico.setDataPublicacao(formatarData(livroDTO.dataPublicacao()));
-        novoLivroFisico.setIsbn(livroDTO.isbn());
-        novoLivroFisico.setStatus(StatusLivro.valueOf(livroDTO.status()));
-        novoLivroFisico.setQuantidade(livroDTO.quantidade());
-        return repository.save(novoLivroFisico);
-    }
-
-    private LocalDate formatarData(String data){
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataConvertida = LocalDate.parse(data, formato);
-        return dataConvertida;
+    public Livro cadastrarLivro(LivroDTO dto){
+        Livro novoLivro = factory.fabricarLivro(dto);
+        return repository.save(novoLivro);
     }
 }
