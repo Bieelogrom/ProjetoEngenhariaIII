@@ -16,7 +16,7 @@ public class EstoqueController {
         livro.setQteEstoque(novoEstoque);
         livroRepository.save(livro);
         if (novoEstoque <= 2) {
-            return "Alerta: o livro " + livro.getNome()+ "atingiu o limite minimo!";
+            return "ALERTA: livro " + livro.getNome()+ " atingiu a quantidade minima em estoque.\n";
         } else {
             return null;
         }

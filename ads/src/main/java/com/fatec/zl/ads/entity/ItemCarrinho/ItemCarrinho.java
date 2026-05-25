@@ -20,7 +20,7 @@ import lombok.Setter;
 public class ItemCarrinho {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @Column(nullable = false)
     private int quantidade;

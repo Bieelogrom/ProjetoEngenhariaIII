@@ -3,6 +3,8 @@ package com.fatec.zl.ads.entity.Cliente;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.zl.ads.entity.Carrinho.Carrinho;
 import com.fatec.zl.ads.entity.Pedido.Pedido;
 import jakarta.persistence.CascadeType;
@@ -41,10 +43,12 @@ public class Cliente {
     private String endereco;
     @Column(nullable = false)
     private String statusCadastro;
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "id_cliente")
     private List<Carrinho> carrinhos;
-    @OneToMany(mappedBy = "Cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente (String NomeCliente, String CPF, LocalDate dataNasc, String email, String telefone, String endereco, String statusCadastro) {

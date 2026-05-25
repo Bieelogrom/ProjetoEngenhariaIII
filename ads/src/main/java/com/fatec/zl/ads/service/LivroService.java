@@ -22,7 +22,8 @@ public class LivroService {
         novoLivro.setDescricao(livro.descricao());
         novoLivro.setPaginas(livro.paginas());
         novoLivro.setDataPublicacao(formatarData(livro.dataPublicacao()));
-        novoLivro.setqteEstoque(livro.qteEstoque());
+        novoLivro.setQteEstoque(livro.qteEstoque());
+        novoLivro.setPreco(livro.preco());
         return livroRepository.save(novoLivro);
     }
 
