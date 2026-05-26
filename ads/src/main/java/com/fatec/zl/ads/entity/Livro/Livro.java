@@ -2,6 +2,11 @@ package com.fatec.zl.ads.entity.Livro;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+
+import com.fatec.zl.ads.entity.Autor.Autor;
+import com.fatec.zl.ads.entity.Editora.Editora;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -13,6 +18,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,4 +57,14 @@ public abstract class Livro {
     private StatusLivro status;
     @Column(name = "percentual_desconto", nullable = false, precision = 5, scale = 4)
     private BigDecimal percentualDesconto = BigDecimal.ZERO;
+    @ManyToMany
+    @JoinTable(
+        name = "livro_autor",
+        joinColumns = @JoinColumn(name = "livro_id"),
+        inverseJoinColumns = @JoinColumn(name = "autor_id")
+    )
+    private List<Autor> autores;
+    @ManyToOne
+    @JoinColumn(name = "editora_id", nullable = false)
+    private Editora editora;
 }
