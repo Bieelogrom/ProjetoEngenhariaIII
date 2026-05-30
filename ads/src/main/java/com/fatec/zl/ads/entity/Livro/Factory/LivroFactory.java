@@ -1,8 +1,6 @@
 package com.fatec.zl.ads.entity.Livro.Factory;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +18,7 @@ import com.fatec.zl.ads.entity.Livro.LivroFisico;
 import com.fatec.zl.ads.entity.Livro.StatusLivro;
 import com.fatec.zl.ads.entity.Livro.DTO.LivroDTO;
 import com.fatec.zl.ads.entity.Livro.Exception.FormatoNaoReconhecidoException;
+import com.fatec.zl.ads.infra.utils.DateUtils;
 import com.fatec.zl.ads.repository.AutorRepository;
 import com.fatec.zl.ads.repository.EditoraRepository;
 
@@ -56,7 +55,7 @@ public class LivroFactory {
         livro.setPreco(BigDecimal.valueOf(dto.preco()));
         livro.setCategorias(dto.categoria());
         livro.setResumo(dto.resumo());
-        livro.setDataPublicacao(formatarData(dto.dataPublicacao()));
+        livro.setDataPublicacao(DateUtils.formatarData(dto.dataPublicacao()));
         livro.setIsbn(dto.isbn());
         livro.setStatus(StatusLivro.valueOf(dto.status()));
         livro.setAutores(buscarAutores(dto.listaDeAutores()));
@@ -78,11 +77,5 @@ public class LivroFactory {
         }
 
         return listaDeAutores;
-    }
-
-    private static LocalDate formatarData(String data){
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataConvertida = LocalDate.parse(data, formato);
-        return dataConvertida;
     }
 }
