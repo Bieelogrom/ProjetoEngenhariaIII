@@ -23,8 +23,8 @@ import lombok.Setter;
 @Setter
 public class Editora {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(length = 120, nullable = false)
     private String nome;
     @Column(length = 27, nullable = false)

@@ -64,14 +64,14 @@ public class LivroFactory {
         return livro;
     }
 
-    private Editora buscarEditora(String id){
+    private Editora buscarEditora(Integer id){
         return editoraRepository.findById(id).orElseThrow(() -> new EditoraNaoEncontradaException("Editora não encontrada!"));
     }
 
-    private List<Autor> buscarAutores(List<String> ids){
+    private List<Autor> buscarAutores(List<Integer> ids){
         List<Autor> listaDeAutores = new ArrayList<>();
 
-        for(String id : ids){
+        for(Integer id : ids){
             Autor autor = autorRepository.findById(id).orElseThrow(() -> new AutorNaoEncontradoException("Autor não encontrado!"));
             listaDeAutores.add(autor);
         }

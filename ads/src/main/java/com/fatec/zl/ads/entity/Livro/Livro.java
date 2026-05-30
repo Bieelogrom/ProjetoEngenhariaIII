@@ -36,8 +36,8 @@ import lombok.Setter;
 @Setter
 public abstract class Livro {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(length = 120, nullable = false)
     private String titulo;
     @Column(nullable = false, precision = 10, scale = 2)
