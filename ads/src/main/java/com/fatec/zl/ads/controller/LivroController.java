@@ -30,7 +30,7 @@ public class LivroController {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<List<Livro>> getMethodName(@RequestParam String titulo) {
+    public ResponseEntity<List<Livro>> buscarLivro(@RequestParam String titulo) {
         List<Livro> livros = service.buscarLivroPorTitulo(titulo);
         return ResponseEntity.ok(livros);
     }
