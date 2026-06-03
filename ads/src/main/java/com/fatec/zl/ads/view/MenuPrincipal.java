@@ -59,7 +59,8 @@ public class MenuPrincipal implements CommandLineRunner {
                     for (Livro livro : listaDeLivros) {
                         String titulo = livro.getTitulo();
                         Integer id = livro.getId();
-                        System.out.println(id+". : "+titulo);
+                        System.out.println(id + ". : " + titulo);
+                        selecionarLivro();
                     }
                 }
                 case 5 -> {
@@ -69,6 +70,35 @@ public class MenuPrincipal implements CommandLineRunner {
                     System.out.println("Opção desconhecida!");
                     break;
                 }
+            }
+        }
+    }
+
+    private void selecionarLivro() {
+        System.out.println("\nDeseja selecionar algum Livro?\nS ou N\n");
+        String opcao = sc.next();
+        
+        if (opcao.equals("N")) {
+            return;
+        }
+
+        while (true) {
+            if (opcao.equals("S")) {
+                System.out.println("\nDigite código e quantidade\nEx.: 1 10");
+                try {
+                    sc.nextLine();
+                    String valores = sc.nextLine();
+                    String[] splitados = valores.split(" ");
+                    Integer codigo = Integer.parseInt(splitados[0]);
+                    Integer quantidade = Integer.parseInt(splitados[1]);
+                    System.out.println(codigo + "" + quantidade);
+                    return;
+                } catch (Exception e) {
+                    System.err.println("valores não reconhecidos!");
+                    continue;
+                }
+            } else {
+                return;
             }
         }
     }
