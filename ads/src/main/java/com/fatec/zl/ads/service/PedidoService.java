@@ -55,6 +55,12 @@ public class PedidoService {
         return pedidoResponseMapper.toDTO(pedidoRepository.save(pedido));
     }
 
+    public void confirmarPagamento(Integer idPedido){
+        Pedido pedido = pedidoRepository.findById(idPedido).orElseThrow(() -> new RuntimeException("Pedido não encontrado!"));
+        pedido.setStatus(StatusPedido.valueOf("CONFIRMADO"));
+        pedidoResponseMapper.toDTO(pedidoRepository.save(pedido));
+    }
+
     private Cliente montarDonoDoCarrinho(Integer idCliente){
         Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(() -> new RuntimeException("Necessário fazer cadastro!"));
         return cliente;

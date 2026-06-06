@@ -15,7 +15,8 @@ public class PedidoResponseMapper {
         return new PedidoResponseDTO(
             entity.getId(),
             entity.getCliente().getId(),
-            montarItens(entity.getItensPedido())
+            montarItens(entity.getItensPedido()),
+            entity.getValorTotal()
         );
     }
 

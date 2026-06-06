@@ -1,9 +1,13 @@
 package com.fatec.zl.ads.controller;
 
+import java.math.BigDecimal;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class SistemaFrete {
 
-    public double calcularFrete(String endereco) {
-        double freteFixo = 18.00;
-        return freteFixo;
+    public BigDecimal calcularFrete(String endereco) {
+        return BigDecimal.valueOf(18);
     }
 }
