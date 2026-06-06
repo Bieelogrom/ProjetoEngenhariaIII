@@ -1,34 +1,34 @@
 package com.fatec.zl.ads.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.fatec.zl.ads.controller.EstoqueController;
-import com.fatec.zl.ads.controller.SistemaBanco;
-import com.fatec.zl.ads.controller.SistemaCartao;
 import com.fatec.zl.ads.controller.SistemaFrete;
-import com.fatec.zl.ads.controller.SistemaPagamento;
-import com.fatec.zl.ads.entity.Carrinho.Carrinho;
-import com.fatec.zl.ads.entity.ItemCarrinho.ItemCarrinho;
+import com.fatec.zl.ads.entity.Carrinho.DTO.AdicionarAoPedidoDTO;
+import com.fatec.zl.ads.entity.Cliente.Cliente;
+import com.fatec.zl.ads.entity.ItemCarrinho.DTO.ItemCarrinhoDTO;
+import com.fatec.zl.ads.entity.ItemPedido.ItemPedido;
+import com.fatec.zl.ads.entity.Livro.Livro;
 import com.fatec.zl.ads.entity.Pedido.Pedido;
 import com.fatec.zl.ads.repository.CarrinhoRepository;
+import com.fatec.zl.ads.repository.ClienteRepository;
 import com.fatec.zl.ads.repository.LivroRepository;
 import com.fatec.zl.ads.repository.PedidoRepository;
 
 @Service
 public class PedidoService {
     private final PedidoRepository pedidoRepository;
-    private final CarrinhoRepository carrinhoRepository;
     private final LivroRepository livroRepository;
+    private final ClienteRepository clienteRepository;
     SistemaFrete sf = new SistemaFrete();
 
-    public PedidoService(PedidoRepository pedidoRepository, CarrinhoRepository carrinhoRepository, LivroRepository livroRepository) {
+    public PedidoService(PedidoRepository pedidoRepository, CarrinhoRepository carrinhoRepository, LivroRepository livroRepository, ClienteRepository clienteRepository) {
         this.pedidoRepository = pedidoRepository;
-        this.carrinhoRepository = carrinhoRepository;
         this.livroRepository = livroRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     // public Pedido exibirPedido (String idCarrinho) {
@@ -110,6 +110,35 @@ public class PedidoService {
     //     return pedidoSalvo;
     // }
     
+    @Transactional
+    public AdicionarAoPedidoDTO adicionarNovoPedido(AdicionarAoPedidoDTO dto){
+        Pedido pedido = pedidoRepository.findById(dto.idPedido()).orElseGet(() -> {
+            Pedido novoPedido = new Pedido();
+            return pedidoRepository.save(novoPedido);
+        });
+        List<ItemPedido> listaDeItens = montarItensDoCarrinho(dto.listaDeItens());
+        pedido.setItensPedido(listaDeItens);
+        pedido.setCliente(montarDonoDoCarrinho(dto.idCliente()));
+        pedidoRepository.save(pedido);
+        return dto;
+    }
+
+    private List<ItemPedido> montarItensDoCarrinho(List<ItemCarrinhoDTO> listaDto){
+        List<ItemPedido> listaDeItens = new ArrayList<>();
+        for(ItemCarrinhoDTO item : listaDto){
+            ItemPedido novoItemDoCarrinho = new ItemPedido();
+            Livro livro = livroRepository.findById(item.idLivro()).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
+            novoItemDoCarrinho.setLivro(livro);
+            novoItemDoCarrinho.setQuantidade(item.quantidade());
+            listaDeItens.add(novoItemDoCarrinho);
+        }
+        return listaDeItens;
+    }
+
+    private Cliente montarDonoDoCarrinho(Integer idCliente){
+        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(() -> new RuntimeException("Necessário fazer cadastro!"));
+        return cliente;
+    }
 }
     
 

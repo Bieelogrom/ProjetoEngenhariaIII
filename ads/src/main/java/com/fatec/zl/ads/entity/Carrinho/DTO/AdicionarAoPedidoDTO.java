@@ -6,6 +6,6 @@ import com.fatec.zl.ads.entity.ItemCarrinho.DTO.ItemCarrinhoDTO;
 
 import jakarta.validation.constraints.NotNull;
 
-public record AdicionarAoCarrinhoDTO(Integer idCarrinho, @NotNull Integer idCliente, List<ItemCarrinhoDTO> listaDeItens) {
+public record AdicionarAoPedidoDTO(Integer idPedido, @NotNull Integer idCliente, List<ItemCarrinhoDTO> listaDeItens) {
 
 }

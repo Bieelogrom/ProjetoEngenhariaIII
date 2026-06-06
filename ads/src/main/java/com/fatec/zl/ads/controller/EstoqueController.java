@@ -1,6 +1,5 @@
 package com.fatec.zl.ads.controller;
 
-import com.fatec.zl.ads.entity.Livro.Livro;
 import com.fatec.zl.ads.repository.LivroRepository;
 
 public class EstoqueController {

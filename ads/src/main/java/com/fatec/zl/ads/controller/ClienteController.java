@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.fatec.zl.ads.entity.Cliente.Cliente;
 import com.fatec.zl.ads.entity.Cliente.ClienteDTORequest;
-import com.fatec.zl.ads.entity.Livro.Livro;
 import com.fatec.zl.ads.service.ClienteService;
 
 @RestController
 @RequestMapping("/clientes")
-public class CadastroCliente {
+public class ClienteController {
     private final ClienteService clienteService;
 
-    public CadastroCliente (ClienteService clienteService) {
+    public ClienteController (ClienteService clienteService) {
         this.clienteService = clienteService;
     }
 
