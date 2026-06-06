@@ -11,14 +11,14 @@ public class EstoqueController {
         this.livroRepository = livroRepository;
     }
     
-    public String atualizarEstoque (Livro livro, int qtePedida) {
-        int novoEstoque = livro.getQteEstoque() - qtePedida;
-        livro.setQteEstoque(novoEstoque);
-        livroRepository.save(livro);
-        if (novoEstoque <= 2) {
-            return "ALERTA: livro " + livro.getNome()+ " atingiu a quantidade minima em estoque.\n";
-        } else {
-            return null;
-        }
-    }
+    // public String atualizarEstoque (Livro livro, int qtePedida) {
+    //     int novoEstoque = livro.getQteEstoque() - qtePedida;
+    //     livro.setQteEstoque(novoEstoque);
+    //     livroRepository.save(livro);
+    //     if (novoEstoque <= 2) {
+    //         return "ALERTA: livro " + livro.getTitulo()+ " atingiu a quantidade minima em estoque.\n";
+    //     } else {
+    //         return null;
+    //     }
+    // }
 }

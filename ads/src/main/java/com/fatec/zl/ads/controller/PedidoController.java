@@ -25,21 +25,21 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    @GetMapping("/exibir/{idCarrinho}")
-    public ResponseEntity<Pedido> exibirPedido(@PathVariable String idCarrinho) {
-        Pedido pedido = pedidoService.exibirPedido(idCarrinho);
-        return ResponseEntity.ok(pedido);
-    }
+    // @GetMapping("/exibir/{idCarrinho}")
+    // public ResponseEntity<Pedido> exibirPedido(@PathVariable String idCarrinho) {
+    //     Pedido pedido = pedidoService.exibirPedido(idCarrinho);
+    //     return ResponseEntity.ok(pedido);
+    // }
 
-    @PostMapping("/efetuar")
-    public ResponseEntity<?> efetuarPedido(@RequestBody PedidoDTORequest pedidoDto) {
-        try {
-            Pedido pedido = pedidoService.efetuarPedido(pedidoDto.idCarrinho(), pedidoDto.enderecoEntrega(), pedidoDto.formaPagamento(), pedidoDto.qteParcelas());
-            return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("{\"erro\": \"" + e.getMessage() + "\"}");
-        }
-    }
+    // @PostMapping("/efetuar")
+    // public ResponseEntity<?> efetuarPedido(@RequestBody PedidoDTORequest pedidoDto) {
+    //     try {
+    //         Pedido pedido = pedidoService.efetuarPedido(pedidoDto.idCarrinho(), pedidoDto.enderecoEntrega(), pedidoDto.formaPagamento(), pedidoDto.qteParcelas());
+    //         return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+    //     } catch (RuntimeException e) {
+    //         return ResponseEntity.badRequest().body("{\"erro\": \"" + e.getMessage() + "\"}");
+    //     }
+    // }
 }
         
 

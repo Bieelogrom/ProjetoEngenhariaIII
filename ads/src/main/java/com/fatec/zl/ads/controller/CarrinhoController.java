@@ -43,7 +43,7 @@ public class CarrinhoController {
     }
 
     @PostMapping("/adicionar/{idCarrinho}/{idCliente}/{idLivro}/{quantidade}")
-    public ResponseEntity<?> adicionarAoCarrinho(@PathVariable String idCarrinho, @PathVariable String idLivro, @PathVariable String idCliente, @PathVariable int quantidade) {
+    public ResponseEntity<?> adicionarAoCarrinho(@PathVariable String idCarrinho, @PathVariable Integer idLivro, @PathVariable String idCliente, @PathVariable int quantidade) {
         Optional<Carrinho> carrinhoOptional = carrinhoRepository.findById(idCarrinho);
         Carrinho carrinho;
         if (carrinhoOptional.isPresent()) {
