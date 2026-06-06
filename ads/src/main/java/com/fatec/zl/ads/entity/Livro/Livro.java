@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fatec.zl.ads.entity.Autor.Autor;
 import com.fatec.zl.ads.entity.Editora.Editora;
 
@@ -52,6 +53,8 @@ public abstract class Livro {
     private LocalDate dataPublicacao;
     @Column(length = 32, nullable = false)
     private String isbn;
+    @Column(nullable = false)
+    private int qteEstoque;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatusLivro status;
@@ -63,8 +66,10 @@ public abstract class Livro {
         joinColumns = @JoinColumn(name = "livro_id"),
         inverseJoinColumns = @JoinColumn(name = "autor_id")
     )
+    @JsonIgnoreProperties("livros")
     private List<Autor> autores;
     @ManyToOne
     @JoinColumn(name = "editora_id", nullable = false)
+    @JsonIgnoreProperties("livros")
     private Editora editora;
 }

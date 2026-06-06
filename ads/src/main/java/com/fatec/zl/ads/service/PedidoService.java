@@ -31,84 +31,84 @@ public class PedidoService {
         this.livroRepository = livroRepository;
     }
 
-    // public Pedido exibirPedido (String idCarrinho) {
-    //     Carrinho carrinho = carrinhoRepository.findById(idCarrinho).orElseThrow(() -> new RuntimeException("Carrinho nao encontrado!"));
-    //     if (carrinho.getItens().isEmpty()) {
-    //         throw new RuntimeException("O carrinho esta vazio");
-    //     }
-    //     double valorPedido = 0;
-    //     for(ItemCarrinho item: carrinho.getItens()) {
-    //         valorPedido += item.getLivro().getPreco() * item.getQuantidade();
-    //     }
-    //     valorPedido += sf.calcularFrete(carrinho.getCliente().getEndereco());
-    //     Pedido pedido = new Pedido();
-    //     pedido.setCliente(carrinho.getCliente());
-    //     pedido.setValorTotal(valorPedido);
-    //     pedido.setStatusPedido("Em processamento");
-    //     pedido.setDataPedido(LocalDate.now());
-    //     return pedido;
-    // }
+    public Pedido exibirPedido (String idCarrinho) {
+        Carrinho carrinho = carrinhoRepository.findById(idCarrinho).orElseThrow(() -> new RuntimeException("Carrinho nao encontrado!"));
+        if (carrinho.getItens().isEmpty()) {
+            throw new RuntimeException("O carrinho esta vazio");
+        }
+        double valorPedido = 0;
+        for(ItemCarrinho item: carrinho.getItens()) {
+            valorPedido += item.getLivro().getPreco().doubleValue() * item.getQuantidade();
+        }
+        valorPedido += sf.calcularFrete(carrinho.getCliente().getEndereco());
+        Pedido pedido = new Pedido();
+        pedido.setCliente(carrinho.getCliente());
+        pedido.setValorTotal(valorPedido);
+        pedido.setStatusPedido("Em processamento");
+        pedido.setDataPedido(LocalDate.now());
+        return pedido;
+    }
 
-    // public Pedido efetuarPedido (String idCarrinho, String endereco, String formaPagamento, int qteParcelas) {
-    //     SistemaPagamento sp = new SistemaPagamento();
-    //     EstoqueController ec = new EstoqueController(livroRepository);
-    //     List<String> listaAlertas = new ArrayList<>();
-    //     SistemaCartao sc = new SistemaCartao();
-    //     Carrinho carrinho = carrinhoRepository.findById(idCarrinho).get();
-    //     if (carrinho.getItens().isEmpty()) {
-    //         throw new RuntimeException("O carrinho está vazio!");
-    //     }
-    //     Pedido pedido = new Pedido();
-    //     pedido.setCliente(carrinho.getCliente());
-    //     pedido.setDataPedido(LocalDate.now());
-    //     pedido.setQteParcelas(qteParcelas);
-    //     double valorPedido = 0;
-    //     for (ItemCarrinho itemCarrinho : carrinho.getItens()) {
-    //         valorPedido += (itemCarrinho.getLivro().getPreco() * itemCarrinho.getQuantidade());
-    //         String alerta = ec.atualizarEstoque(itemCarrinho.getLivro(), itemCarrinho.getQuantidade());
-    //         if (alerta != null) {
-    //             listaAlertas.add(alerta);
-    //         }
-    //     }
-    //     double frete = sf.calcularFrete(endereco);
-    //     valorPedido += frete;
-    //     pedido.setStatusPedido("Pagamento pendente");
-    //     if (formaPagamento.equals("Pix")) {
-    //         valorPedido = sp.calcularDescontoPix(valorPedido, 8);
-    //         SistemaBanco sb = new SistemaBanco();
-    //         if (!sb.pagarPix(valorPedido)) {
-    //                 throw new RuntimeException("Falha no pagamento!");
-    //         }
-    //         else {
-    //             pedido.setStatusPedido("Confirmado");
-    //         }
-    //     } else if (formaPagamento.equals("Cartao")) {
-    //         if (pedido.getQteParcelas() == 1) {
-    //             valorPedido = sp.calcularDescontoCartao(valorPedido, 3, 1 );
-    //             if (!sc.pagarAVista(valorPedido)){
-    //                 throw new RuntimeException("Falha no pagamento!");
-    //             } else {
-    //                 pedido.setStatusPedido("Confirmado");
-    //             }
-    //         } else {
-    //             if (!sc.pagarParcelado(valorPedido, pedido.getQteParcelas())) {
-    //                 throw new RuntimeException("Falha no pagamento!");
-    //             } else {
-    //                 pedido.setStatusPedido("Confirmado");
-    //             }
-    //         }
-    //     }
-    //     pedido.setStatusPedido("Finalizado");                     
-    //     if (!listaAlertas.isEmpty()) {
-    //         String todosAlertas = String.join(" | ", listaAlertas);
-    //         pedido.setStatusPedido(pedido.getStatusPedido() + " - " + todosAlertas);
-    //     }
-    //     pedido.setValorTotal(valorPedido);
-    //     Pedido pedidoSalvo = pedidoRepository.save(pedido);
-    //     carrinho.getItens().clear();
-    //     carrinhoRepository.save(carrinho);
-    //     return pedidoSalvo;
-    // }
+    public Pedido efetuarPedido (String idCarrinho, String endereco, String formaPagamento, int qteParcelas) {
+        SistemaPagamento sp = new SistemaPagamento();
+        EstoqueController ec = new EstoqueController(livroRepository);
+        List<String> listaAlertas = new ArrayList<>();
+        SistemaCartao sc = new SistemaCartao();
+        Carrinho carrinho = carrinhoRepository.findById(idCarrinho).get();
+        if (carrinho.getItens().isEmpty()) {
+            throw new RuntimeException("O carrinho está vazio!");
+        }
+        Pedido pedido = new Pedido();
+        pedido.setCliente(carrinho.getCliente());
+        pedido.setDataPedido(LocalDate.now());
+        pedido.setQteParcelas(qteParcelas);
+        double valorPedido = 0;
+        for (ItemCarrinho itemCarrinho : carrinho.getItens()) {
+            valorPedido += (itemCarrinho.getLivro().getPreco().doubleValue() * itemCarrinho.getQuantidade());
+            String alerta = ec.atualizarEstoque(itemCarrinho.getLivro(), itemCarrinho.getQuantidade());
+            if (alerta != null) {
+                listaAlertas.add(alerta);
+            }
+        }
+        double frete = sf.calcularFrete(endereco);
+        valorPedido += frete;
+        pedido.setStatusPedido("Pagamento pendente");
+        if (formaPagamento.equals("Pix")) {
+            valorPedido = sp.calcularDescontoPix(valorPedido, 8);
+            SistemaBanco sb = new SistemaBanco();
+            if (!sb.pagarPix(valorPedido)) {
+                    throw new RuntimeException("Falha no pagamento!");
+            }
+            else {
+                pedido.setStatusPedido("Confirmado");
+            }
+        } else if (formaPagamento.equals("Cartao")) {
+            if (pedido.getQteParcelas() == 1) {
+                valorPedido = sp.calcularDescontoCartao(valorPedido, 3, 1 );
+                if (!sc.pagarAVista(valorPedido)){
+                    throw new RuntimeException("Falha no pagamento!");
+                } else {
+                    pedido.setStatusPedido("Confirmado");
+                }
+            } else {
+                if (!sc.pagarParcelado(valorPedido, pedido.getQteParcelas())) {
+                    throw new RuntimeException("Falha no pagamento!");
+                } else {
+                    pedido.setStatusPedido("Confirmado");
+                }
+            }
+        }
+        pedido.setStatusPedido("Finalizado");                     
+        if (!listaAlertas.isEmpty()) {
+            String todosAlertas = String.join(" | ", listaAlertas);
+            pedido.setStatusPedido(pedido.getStatusPedido() + " - " + todosAlertas);
+        }
+        pedido.setValorTotal(valorPedido);
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+        carrinho.getItens().clear();
+        carrinhoRepository.save(carrinho);
+        return pedidoSalvo;
+    }
     
 }
     
