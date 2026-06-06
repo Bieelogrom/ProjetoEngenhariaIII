@@ -27,9 +27,9 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
-    @GetMapping("/exibir/{idCarrinho}")
-    public ResponseEntity<PedidoResponseDTO> exibirPedido(@PathVariable Integer idCarrinho) {
-        PedidoResponseDTO pedido = pedidoService.exibirPedido(idCarrinho);
+    @GetMapping("/exibir/{idPedido}")
+    public ResponseEntity<PedidoResponseDTO> exibirPedido(@PathVariable Integer idPedido) {
+        PedidoResponseDTO pedido = pedidoService.exibirPedido(idPedido);
         return ResponseEntity.ok(pedido);
     }
 
@@ -39,9 +39,9 @@ public class PedidoController {
         return ResponseEntity.ok(dtoResponse);
     }  
 
-    @PatchMapping("/confirmar")
-    public ResponseEntity<PedidoResponseDTO> confirmarPedido(@PathVariable Integer pedidoId){
-        PedidoResponseDTO response = pedidoService.confirmarPedido(pedidoId);
+    @PatchMapping("/confirmar/{idPedido}")
+    public ResponseEntity<PedidoResponseDTO> confirmarPedido(@PathVariable Integer idPedido){
+        PedidoResponseDTO response = pedidoService.confirmarPedido(idPedido);
         return ResponseEntity.ok(response);
     }
 }
