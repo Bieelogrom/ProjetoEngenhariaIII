@@ -70,4 +70,6 @@ public abstract class Livro {
     @ManyToOne
     @JoinColumn(name = "editora_id", nullable = false)
     private Editora editora;
+
+    public abstract BigDecimal calcularPrecoVenda();
 }

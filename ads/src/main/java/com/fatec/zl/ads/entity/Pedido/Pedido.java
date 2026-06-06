@@ -1,13 +1,19 @@
 package com.fatec.zl.ads.entity.Pedido;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fatec.zl.ads.entity.Cliente.Cliente;
 import com.fatec.zl.ads.entity.ItemPedido.ItemPedido;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,18 +35,20 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String statusPedido;
-    @Column(nullable = false)
-    private LocalDate dataPedido;
+    private StatusPedido status;
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dataPedido;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_pedido")
     private List<ItemPedido> itensPedido = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
-    @Column(nullable = false)
-    private double valorTotal;
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal valorTotal = BigDecimal.ZERO;
+    @Column(nullable = true)
     private int qteParcelas;
 }

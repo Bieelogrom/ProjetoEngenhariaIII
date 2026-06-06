@@ -15,4 +15,9 @@ public class LivroBrochura extends LivroFisico {
     public LivroBrochura(){
         this.setPercentualDesconto(new BigDecimal("0.05"));
     }
+
+    @Override
+    public BigDecimal calcularPrecoVenda() {
+        return getPreco().multiply(BigDecimal.valueOf(0.95));
+    }
 }

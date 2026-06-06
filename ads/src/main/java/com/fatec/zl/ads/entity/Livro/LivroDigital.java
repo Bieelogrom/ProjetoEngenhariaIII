@@ -12,7 +12,8 @@ import lombok.Setter;
 @Setter
 @DiscriminatorValue("DIGITAL")
 public class LivroDigital extends Livro {
-    public LivroDigital(){
-        this.setPercentualDesconto(new BigDecimal("0.10"));
+    @Override
+    public BigDecimal calcularPrecoVenda() {
+        return getPreco().multiply(BigDecimal.valueOf(0.90));
     }
 }
