@@ -1,9 +1,7 @@
 package com.fatec.zl.ads.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.fatec.zl.ads.entity.Livro.Livro;
 import com.fatec.zl.ads.entity.Livro.DTO.LivroDTO;
 import com.fatec.zl.ads.entity.Livro.Factory.LivroFactory;
