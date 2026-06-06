@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fatec.zl.ads.entity.Carrinho.DTO.AdicionarAoPedidoDTO;
+import com.fatec.zl.ads.entity.Pedido.DTO.AdicionarAoPedidoDTO;
 import com.fatec.zl.ads.service.PedidoService;
 
 import jakarta.validation.Valid;
