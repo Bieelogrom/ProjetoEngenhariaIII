@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.zl.ads.entity.Autor.Autor;
 import com.fatec.zl.ads.entity.Editora.Editora;
 
@@ -57,6 +58,7 @@ public abstract class Livro {
     private StatusLivro status;
     @Column(name = "percentual_desconto", nullable = false, precision = 5, scale = 4)
     private BigDecimal percentualDesconto = BigDecimal.ZERO;
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "livro_autor",
@@ -64,6 +66,7 @@ public abstract class Livro {
         inverseJoinColumns = @JoinColumn(name = "autor_id")
     )
     private List<Autor> autores;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "editora_id", nullable = false)
     private Editora editora;
