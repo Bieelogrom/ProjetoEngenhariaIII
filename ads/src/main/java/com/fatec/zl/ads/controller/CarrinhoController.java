@@ -1,18 +1,25 @@
 package com.fatec.zl.ads.controller;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.fatec.zl.ads.entity.Carrinho.Carrinho;
+import com.fatec.zl.ads.entity.Carrinho.DTO.AdicionarAoCarrinhoDTO;
+import com.fatec.zl.ads.entity.Carrinho.DTO.AdicionarAoCarrinhoResponseDTO;
 import com.fatec.zl.ads.entity.Cliente.Cliente;
 import com.fatec.zl.ads.entity.ItemCarrinho.ItemCarrinho;
 import com.fatec.zl.ads.entity.Livro.Livro;
 import com.fatec.zl.ads.service.CarrinhoService;
+
+import jakarta.validation.Valid;
+
 import com.fatec.zl.ads.repository.CarrinhoRepository;
 import com.fatec.zl.ads.repository.ClienteRepository;
 import com.fatec.zl.ads.repository.LivroRepository;
@@ -34,7 +41,7 @@ public class CarrinhoController {
     }
 
     @GetMapping("/carrinho/visualizar/{idCarrinho}")
-    public ResponseEntity<?> visualizarCarrinhoAntes(@PathVariable String idCarrinho) {
+    public ResponseEntity<?> visualizarCarrinhoAntes(@PathVariable Integer idCarrinho) {
         Carrinho carrinho = carrinhoRepository.findById(idCarrinho).orElse(null);
         if (carrinho == null || carrinho.getItens().isEmpty()) {
             return ResponseEntity.badRequest().body("O carrinho está vazio!");
@@ -42,26 +49,10 @@ public class CarrinhoController {
         return ResponseEntity.ok(carrinho.getItens());
     }
 
-    @PostMapping("/adicionar/{idCarrinho}/{idCliente}/{idLivro}/{quantidade}")
-    public ResponseEntity<?> adicionarAoCarrinho(@PathVariable String idCarrinho, @PathVariable Integer idLivro, @PathVariable String idCliente, @PathVariable int quantidade) {
-        Optional<Carrinho> carrinhoOptional = carrinhoRepository.findById(idCarrinho);
-        Carrinho carrinho;
-        if (carrinhoOptional.isPresent()) {
-            carrinho = carrinhoOptional.get();
-        } 
-        else {
-            carrinho = new Carrinho();
-            carrinho.setId(idCarrinho);
-            Cliente cliente = clienteRepository.findById(idCliente).get();
-            carrinho.setCliente(cliente);
-        }
-        Livro livro = livroRepository.findById(idLivro).get();
-        ItemCarrinho item = new ItemCarrinho();
-        item.setQuantidade(quantidade);
-        item.setLivro(livro);
-        carrinho.getItens().add(item);
-        carrinhoRepository.save(carrinho);
-        return ResponseEntity.ok("{\"mensagem\": \"Livro adicionado ao carrinho com sucesso!\"}");
+    @PostMapping("/adicionar")
+    public ResponseEntity<AdicionarAoCarrinhoDTO> adicionarAoCarrinho(@RequestBody @Valid AdicionarAoCarrinhoDTO dto) {
+        AdicionarAoCarrinhoDTO dtoResponse = carrinhoService.adicionarAoCarrinho(dto);
+        return ResponseEntity.ok(dtoResponse);
     }   
 
 }
