@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.fatec.zl.ads.controller.EstoqueController;
 import com.fatec.zl.ads.controller.SistemaBanco;
 import com.fatec.zl.ads.controller.SistemaCartao;
+import com.fatec.zl.ads.controller.SistemaFrete;
 import com.fatec.zl.ads.controller.SistemaPagamento;
 import com.fatec.zl.ads.entity.Carrinho.Carrinho;
 import com.fatec.zl.ads.entity.ItemCarrinho.ItemCarrinho;
@@ -22,6 +23,7 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final CarrinhoRepository carrinhoRepository;
     private final LivroRepository livroRepository;
+    SistemaFrete sf = new SistemaFrete();
 
     public PedidoService(PedidoRepository pedidoRepository, CarrinhoRepository carrinhoRepository, LivroRepository livroRepository) {
         this.pedidoRepository = pedidoRepository;
@@ -38,7 +40,7 @@ public class PedidoService {
         for(ItemCarrinho item: carrinho.getItens()) {
             valorPedido += item.getLivro().getPreco() * item.getQuantidade();
         }
-        valorPedido += calcularFrete(carrinho.getCliente().getEndereco());
+        valorPedido += sf.calcularFrete(carrinho.getCliente().getEndereco());
         Pedido pedido = new Pedido();
         pedido.setCliente(carrinho.getCliente());
         pedido.setValorTotal(valorPedido);
@@ -68,7 +70,7 @@ public class PedidoService {
                 listaAlertas.add(alerta);
             }
         }
-        double frete = calcularFrete(endereco);
+        double frete = sf.calcularFrete(endereco);
         valorPedido += frete;
         pedido.setStatusPedido("Pagamento pendente");
         if (formaPagamento.equals("Pix")) {
@@ -106,11 +108,6 @@ public class PedidoService {
         carrinho.getItens().clear();
         carrinhoRepository.save(carrinho);
         return pedidoSalvo;
-    }
-
-    public double calcularFrete(String endereco) {
-        double freteFixo = 18.00;
-        return freteFixo;
     }
     
 }
