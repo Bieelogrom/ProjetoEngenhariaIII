@@ -30,6 +30,12 @@ public class PedidoService {
         this.pedidoResponseMapper = pedidoResponseMapper;
     }
 
+    @Transactional(readOnly = true)
+    public PedidoResponseDTO exibirPedido(Integer idPedido){
+        Pedido pedido = pedidoRepository.findById(idPedido).orElseThrow(() -> new RuntimeException("Pedido não encontrado!"));
+        return pedidoResponseMapper.toDTO(pedido);
+    }
+
     @Transactional
     public AdicionarAoPedidoDTO adicionarNovoPedido(AdicionarAoPedidoDTO dto){
         Pedido pedido = pedidoRepository.findById(dto.idPedido()).orElseGet(Pedido::new);
@@ -42,6 +48,7 @@ public class PedidoService {
         return dto;
     }
 
+    @Transactional
     public PedidoResponseDTO confirmarPedido(Integer idPedido){
         Pedido pedido = pedidoRepository.findById(idPedido).orElseThrow(() -> new RuntimeException("Pedido não encontrado!"));
         pedido.setStatus(StatusPedido.valueOf("PAGAMENTO_PENDENTE"));
